@@ -12,7 +12,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
         log.error(
                 "\n\n-------------------------------- " +
-                        "Express application started successfully" +
+                        "Express application started successfully!!!" +
                         " --------------------------------\n\n");
     }
 
