@@ -16,11 +16,11 @@
         <div class="mt10 pull-right">
             <a href="/index"><i class="glyphicon glyphicon-backward"></i>返回登陆</a>
         </div>
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#registryUsername" aria-controls="username" role="tab" data-toggle="tab">用户名注册</a></li>
-            <li role="presentation"><a href="#registryTel" aria-controls="tel" role="tab" data-toggle="tab">手机号注册</a></li>
-            <li role="presentation"><a href="#registryFace" aria-controls="face" role="tab" data-toggle="tab">人脸注册</a></li>
-        </ul>
+        <!--<ul class="nav nav-tabs" role="tablist">-->
+            <!--<li role="presentation" class="active"><a href="#registryUsername" aria-controls="username" role="tab" data-toggle="tab">用户名注册</a></li>-->
+            <!--<li role="presentation"><a href="#registryTel" aria-controls="tel" role="tab" data-toggle="tab">手机号注册</a></li>-->
+            <!--<li role="presentation"><a href="#registryFace" aria-controls="face" role="tab" data-toggle="tab">人脸注册</a></li>-->
+        <!--</ul>-->
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="registryUsername">
@@ -51,37 +51,37 @@
                     </div>
                 </form>
             </div>
-            <div role="tabpanel" class="tab-pane" id="registryTel">
-                <form role="form" class="form-horizontal" id="registryTelForm">
-                    <input type="hidden" name="type" value="2">
-                    <div class="form-group">
-                        <label for="inputTel" class="col-sm-3 control-label">手机号</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputTel" name="tel" placeholder="请输入手机号">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="telCode" class="col-sm-3 control-label">验证码</label>
-                        <div class="col-sm-9">
-                            <div class="row" >
-                                <div class="col-md-6 col-sm-12 col-lg-6 col-xs-12 " >
-                                    <input type="text" class="form-control" id="telCode" name="code" placeholder="请输入验证码">
-                                </div>
-                                <div class="col-md-6 col-sm-12 col-lg-6 col-xs-12 telCode">
-                                    <button type="button" class="btn btn-info btn-block" id="getTelCode" >获取验证码</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-lg btn-block">注册</button>
-                </form>
-            </div>
-            <div  role="tabpanel" class="tab-pane"  id="registryFace">
-                <div class="capture">
-                    <video id="video" autoplay style="width: 80%;margin: 0 auto;"></video>
-                    <canvas id="canvas" width="480" height="320" style="display: none;"></canvas>
-                </div>
-            </div>
+            <!--<div role="tabpanel" class="tab-pane" id="registryTel">-->
+                <!--<form role="form" class="form-horizontal" id="registryTelForm">-->
+                    <!--<input type="hidden" name="type" value="2">-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="inputTel" class="col-sm-3 control-label">手机号</label>-->
+                        <!--<div class="col-sm-9">-->
+                            <!--<input type="text" class="form-control" id="inputTel" name="tel" placeholder="请输入手机号">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="telCode" class="col-sm-3 control-label">验证码</label>-->
+                        <!--<div class="col-sm-9">-->
+                            <!--<div class="row" >-->
+                                <!--<div class="col-md-6 col-sm-12 col-lg-6 col-xs-12 " >-->
+                                    <!--<input type="text" class="form-control" id="telCode" name="code" placeholder="请输入验证码">-->
+                                <!--</div>-->
+                                <!--<div class="col-md-6 col-sm-12 col-lg-6 col-xs-12 telCode">-->
+                                    <!--<button type="button" class="btn btn-info btn-block" id="getTelCode" >获取验证码</button>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<button type="submit" class="btn btn-success btn-lg btn-block">注册</button>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div  role="tabpanel" class="tab-pane"  id="registryFace">-->
+                <!--<div class="capture">-->
+                    <!--<video id="video" autoplay style="width: 80%;margin: 0 auto;"></video>-->
+                    <!--<canvas id="canvas" width="480" height="320" style="display: none;"></canvas>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 </div>
@@ -97,53 +97,53 @@
     let  countdown;
     $(function(){
         // 验证码
-        $("#getTelCode").click(function () {
-            sendCode($("#getTelCode"));
-        });
-        let v = getCookieValue(cookieName);//获取cookie值
-        if (v > 0) {
-            setTime($("#getTelCode"));//开始倒计时
-        }
+        // $("#getTelCode").click(function () {
+        //     sendCode($("#getTelCode"));
+        // });
+        // let v = getCookieValue(cookieName);//获取cookie值
+        // if (v > 0) {
+        //     setTime($("#getTelCode"));//开始倒计时
+        // }
     });
     // 发送验证码
-    function sendCode(obj) {
-        let phoneNum = $("#inputTel").val();
-        if (!isPoneAvailable(phoneNum)) {
-            layer.msg("手机号码不合法", {icon: 7});
-            return false;
-        }
-        sendJson(HTTP.GET, '/auth/code/sms?mobile=' + phoneNum, null, false, function (res) {
-                if (res.code === 0) {
-                    layer.msg("短信发送成功", {icon: 1});
-                    addCookie(cookieName, 60, 60);//添加cookie记录,有效时间60s
-                    setTime(obj);//开始倒计
-                } else {
-                    layer.msg(res.msg, {icon: 2});
-                }
-            },
-            function () {
-                layer.msg("未知错误", {icon: 2});
-            });
-    }
+    // function sendCode(obj) {
+    //     let phoneNum = $("#inputTel").val();
+    //     if (!isPoneAvailable(phoneNum)) {
+    //         layer.msg("手机号码不合法", {icon: 7});
+    //         return false;
+    //     }
+    //     sendJson(HTTP.GET, '/auth/code/sms?mobile=' + phoneNum, null, false, function (res) {
+    //             if (res.code === 0) {
+    //                 layer.msg("短信发送成功", {icon: 1});
+    //                 addCookie(cookieName, 60, 60);//添加cookie记录,有效时间60s
+    //                 setTime(obj);//开始倒计
+    //             } else {
+    //                 layer.msg(res.msg, {icon: 2});
+    //             }
+    //         },
+    //         function () {
+    //             layer.msg("未知错误", {icon: 2});
+    //         });
+    // }
 
     //开始倒计时
-    function setTime(obj) {
-
-        countdown = getCookieValue(cookieName);
-        if (countdown == 0) {
-            obj.removeAttr("disabled");
-            document.getElementById("getTelCode").innerText = '重新获取验证码';
-            return;
-        } else {
-            obj.attr("disabled", true);
-            document.getElementById("getTelCode").innerText = countdown + 's之后重新发送';
-            countdown--;
-            editCookie(cookieName, countdown, countdown + 1);
-        }
-        setTimeout(function () {
-            setTime(obj)
-        }, 1000) //每1000毫秒执行一次
-    }
+    // function setTime(obj) {
+    //
+    //     countdown = getCookieValue(cookieName);
+    //     if (countdown == 0) {
+    //         obj.removeAttr("disabled");
+    //         document.getElementById("getTelCode").innerText = '重新获取验证码';
+    //         return;
+    //     } else {
+    //         obj.attr("disabled", true);
+    //         document.getElementById("getTelCode").innerText = countdown + 's之后重新发送';
+    //         countdown--;
+    //         editCookie(cookieName, countdown, countdown + 1);
+    //     }
+    //     setTimeout(function () {
+    //         setTime(obj)
+    //     }, 1000) //每1000毫秒执行一次
+    // }
 
     $().ready(function() {
         $("#registryUsernameForm").validate({
@@ -187,40 +187,40 @@
             }
         });
 
-        $("#registryTelForm").validate({
-            rules: {
-                tel: {
-                    required: true,
-                    number: true
-                },
-                code: {
-                    required: true,
-                    number: true
-                }
-            },
-            messages: {
-                tel: {
-                    required: "手机号码不能为空",
-                    number: "非法字符"
-                },
-                code: {
-                    required: "验证码不能为空",
-                    number: "非法字符"
-                }
-            },
-            submitHandler: function (form) {
-                sendJson(HTTP.POST, "/auth/register", $("#registryTelForm").serialize(), false, function (res) {
-                    if (res.code === 0) {
-                        layer.msg("注册成功", {icon: 1});
-                        setTimeout("new function(){window.location.href='/'}","3000");
-                    } else {
-                        layer.msg(res.msg, {icon: 2});
-                    }
-                }, function () {
-                    layer.msg("未知错误", {icon: 2});
-                });
-            }
-        });
+        // $("#registryTelForm").validate({
+        //     rules: {
+        //         tel: {
+        //             required: true,
+        //             number: true
+        //         },
+        //         code: {
+        //             required: true,
+        //             number: true
+        //         }
+        //     },
+        //     messages: {
+        //         tel: {
+        //             required: "手机号码不能为空",
+        //             number: "非法字符"
+        //         },
+        //         code: {
+        //             required: "验证码不能为空",
+        //             number: "非法字符"
+        //         }
+        //     },
+        //     submitHandler: function (form) {
+        //         sendJson(HTTP.POST, "/auth/register", $("#registryTelForm").serialize(), false, function (res) {
+        //             if (res.code === 0) {
+        //                 layer.msg("注册成功", {icon: 1});
+        //                 setTimeout("new function(){window.location.href='/'}","3000");
+        //             } else {
+        //                 layer.msg(res.msg, {icon: 2});
+        //             }
+        //         }, function () {
+        //             layer.msg("未知错误", {icon: 2});
+        //         });
+        //     }
+        // });
     });
 
 
@@ -266,7 +266,7 @@
     }
     let video = document.getElementById('video');
     let canvas = document.getElementById('canvas');
-    let context = canvas.getContext('2d');
+    // let context = canvas.getContext('2d');
 
     function success(stream) {
         //兼容webkit核心浏览器
