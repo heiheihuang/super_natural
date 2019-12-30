@@ -86,7 +86,14 @@ public class AdminPageController {
         map.put("frontName", sysUserService.getFrontName(sysUser));
         return "admin/feedback";
     }
-
+    /**
+     * 公司管理页面
+     */
+    @RequestMapping("/company")
+    public String showCompany(@AuthenticationPrincipal SysUser sysUser, ModelMap map) {
+        map.put("frontName", sysUserService.getFrontName(sysUser));
+        return "admin/company";
+    }
     /**
      * 用户管理页面
      */

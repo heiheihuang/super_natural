@@ -37,7 +37,7 @@
                                 <button type="button" class="btn btn-danger col-md-3" th:if="${info.username == null}" onclick="showModel(2)">立即申请</button>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label for="tel" class="col-md-2 control-label">手机号码</label>
                             <div class="col-md-10">
                                 <p class="form-control-static col-md-7" id="tel"
@@ -46,14 +46,14 @@
                                 <button type="button" class="btn btn-default col-md-3" th:if="${info.tel != null}" onclick="showModel(3)">更改绑定</button>
                                 <button type="button" class="btn btn-danger col-md-3" th:if="${info.tel == null}" onclick="showModel(3)">立即绑定</button>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <label for="sex" class="col-md-2 control-label">性别</label>
                             <div class="col-md-10">
                                 <p class="form-control-static col-md-7" id="sex" th:text="${info.sex == 1 ? '男' : '女'}"></p>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label for="faceLogin" class="col-md-2 control-label">人脸登录</label>
                             <div class="col-md-10">
                                 <p class="form-control-static col-md-7" id="faceLogin"
@@ -62,7 +62,7 @@
                                 <button type="button" class="btn btn-default col-md-3" th:if="${info.canFace == '1'}" onclick="showModel(4)">更换人脸</button>
                                 <button type="button" class="btn btn-danger col-md-3" th:if="${info.canFace == '0'}" onclick="showModel(4)">绑定人脸</button>
                             </div>
-                        </div>
+                        </div>-->
                     </form>
                 </div><hr>
             </div>
