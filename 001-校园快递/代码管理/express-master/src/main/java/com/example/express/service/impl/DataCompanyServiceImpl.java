@@ -1,9 +1,13 @@
 package com.example.express.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.express.common.cache.CommonDataCache;
 import com.example.express.common.constant.RedisKeyConstant;
 import com.example.express.domain.bean.DataCompany;
+import com.example.express.domain.vo.BootstrapTableVO;
 import com.example.express.mapper.DataCompanyMapper;
 import com.example.express.service.DataCompanyService;
 import io.netty.util.concurrent.DefaultThreadFactory;
@@ -14,6 +18,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -43,6 +48,15 @@ public class DataCompanyServiceImpl extends ServiceImpl<DataCompanyMapper, DataC
     @Override
     public DataCompany getByCache(Integer id) {
         return CommonDataCache.dataCompanyCache.get(id);
+    }
+
+    @Override
+    public BootstrapTableVO<DataCompany> pageDataCompanyVO(Page<DataCompany> dataCompanyPage) {
+        IPage<DataCompany> selectPage = dataCompanyMapper.selectPage(dataCompanyPage, new QueryWrapper<>());
+        BootstrapTableVO<DataCompany> result = new BootstrapTableVO<>();
+        result.setTotal(selectPage.getTotal());
+        result.setRows(selectPage.getRecords());
+        return result;
     }
 
     @Override

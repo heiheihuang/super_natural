@@ -50,7 +50,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tb_company').bootstrapTable({
-                url: '/api/v1/public/company',          //请求后台的URL（*）
+                url: '/api/v1/company/company-list',          //请求后台的URL（*）
                 method: HTTP.GET,                   //请求方式（*）
                 toolbar: '#toolbar',                //工具按钮组id
                 striped: true,                      //是否显示行间隔色
@@ -94,7 +94,6 @@
                 }]
             });
         };
-
         // 传递给后台的参数
         oTableInit.queryParams = function (params) {
             return {   //这里的键的名字和后台参数必须一致
@@ -107,94 +106,19 @@
 
     //操作栏的格式化
     function actionFormatter(value, row, index) {
-        let id = "'" + value + "'", result = '';
-
-        // 不允许操作管理员
-        if( row.role === 1) {
-            return result;
-        }
-
-        // 启用/禁用
-        if(row.hasEnable) {
-            result += '<button class="btn btn-xs btn-danger" onclick="changeStatus(1,'+id+')" title="禁用">禁用</button>\n';
-        } else {
-            result += '<button class="btn btn-xs btn-success" onclick="changeStatus(2,'+id+')" title="启用">启用</button>\n';
-        }
-
-        // 冻结时间
-        if(row.lockDate === null || row.lockDate === '') {
-            result += '<button class="btn btn-xs btn-danger" onclick="changeStatus(3,'+id+')" title="冻结">冻结</button>\n';
-        } else {
-            result += '<button class="btn btn-xs btn-success" onclick="changeStatus(4,'+id+')" title="解冻">解冻</button>\n';
-        }
-
-        return result;
-    }
-    function roleFormatter(value, row, index) {
-        switch (value) {
-            case -1:
-                return '<span style="color:gray">非正式用户</span>';
-            case 1:
-                return '<span>系统管理员</span>';
-            case 2:
-                return '<span>配送员</span>';
-            case 3:
-                return '<span>普通用户</span>';
-        }
-    }
-    function realFormatter(value, row, index) {
-        if(value) {
-            return '<span style="color:gray">已实名</span>';
-        } else {
-            return '<span style="color:red">未实名</span>';
-        }
-    }
-    function enableFormatter(value, row, index) {
-        if(value) {
-            return '<span style="color:gray">启用</span>';
-        } else {
-            return '<span style="color:red">禁用</span>';
-        }
-    }
-    function lockFormatter(value, row, index) {
-        if(value === null || value === '') {
-            return '<span style="color:gray">未冻结</span>';
-        } else {
-            return '<span style="color:red">'+value+'</span>';
-        }
-    }
-    function scoreFormatter(value, row, index) {
-        if(value != null) {
-            if(value < 3) {
-                return '<span style="color:red">'+value+'</span>';
-            } else if(value < 7) {
-                return '<span style="color:orange">'+value+'</span>';
-            } else {
-                return '<span style="color:green">'+value+'</span>';
-            }
-        }
+        let id = "'" + value + "'";
+        return '<button class="btn btn-xs btn-danger" onclick="changeStatus(' + id + ')" title="删除">删除</button>';
     }
 
-    function changeStatus(type, id) {
-        // 1. 禁用；2：启用；3：冻结；4：解冻
-        if(type === 3) {
-            layer.prompt({title:"冻结小时", formType:0},function(val, index) {
-                sendJson(HTTP.POST, "/api/v1/user/"+id+"/status", {"type": type, "hour": val}, false, function (res) {
-                    if(res.code === 0) {
-                        layer.msg("操作成功",{icon:1});
-                        layer.close(index);
-                        flushTable();
-                    } else {
-                        layer.msg(res.msg,{icon:2});
-                    }
-                }, function () {
-                    layer.msg("未知错误",{icon:2});
-                });
-            });
-        } else {
-            sendJson(HTTP.POST, "/api/v1/user/"+id+"/status", {"type": type}, false, function (res) {
+    function changeStatus(id) {
+        //询问框
+        layer.confirm('是否删除该公司？', {
+            btn: ['确认','取消'] //按钮
+        }, function(){
+            sendJson(HTTP.POST, "/api/v1/company/"+id+"/delete", {}, false, function (res) {
                 if(res.code === 0) {
                     layer.msg("操作成功",{icon:1});
+                    layer.close(index);
                     flushTable();
                 } else {
                     layer.msg(res.msg,{icon:2});
@@ -202,11 +126,13 @@
             }, function () {
                 layer.msg("未知错误",{icon:2});
             });
-        }
+        }, function(){
+            layer.msg("已取消",{icon:6});
+        });
     }
 
     function flushTable() {
-        $("#tb_user").bootstrapTable('refresh',{url : '/api/v1/user/list'} );
+        $("#tb_company").bootstrapTable('refresh',{url : '/api/v1/company/company-list'} );
     }
 </script>
 </body>
