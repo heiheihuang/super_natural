@@ -46,6 +46,11 @@ public class DataCompanyServiceImpl extends ServiceImpl<DataCompanyMapper, DataC
     }
 
     @Override
+    public List<DataCompany> listAllByNameOrCode(String name, String code) {
+        return new ArrayList<>();
+    }
+
+    @Override
     public DataCompany getByCache(Integer id) {
         return CommonDataCache.dataCompanyCache.get(id);
     }

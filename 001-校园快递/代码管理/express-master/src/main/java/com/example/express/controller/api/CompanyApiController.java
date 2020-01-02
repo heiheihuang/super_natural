@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/company")
 public class CompanyApiController {
@@ -36,9 +38,27 @@ public class CompanyApiController {
      */
     @PostMapping("/{id}/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseResult changeStatus(@PathVariable String id) {
+    public ResponseResult deleteCompany(@PathVariable String id) {
         DataCompany dataCompany = dataCompanyService.getById(id);
         if(dataCompanyService.removeById(dataCompany)) {
+            return ResponseResult.success();
+        } else {
+            return ResponseResult.failure(ResponseErrorCodeEnum.OPERATION_ERROR);
+        }
+    }
+
+    /**
+     * 新增公司
+     * @author jitwxs
+     * @date 2019/5/2 13:50
+     */
+    @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseResult addCompany(String name, String code) {
+        List<DataCompany> dataCompanyList = dataCompanyService.listAllByNameOrCode(name, code);
+        if (dataCompanyList.isEmpty()) {
+            DataCompany dataCompany = DataCompany.builder().code(code).name(name).build();
+            dataCompanyService.save(dataCompany);
             return ResponseResult.success();
         } else {
             return ResponseResult.failure(ResponseErrorCodeEnum.OPERATION_ERROR);

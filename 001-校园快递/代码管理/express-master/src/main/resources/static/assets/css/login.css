@@ -18,7 +18,7 @@
 }
 .main{
     margin-top: 150px;
-    width: 50%;
+    width: 60%;
     min-height: 400px;
     border-radius: 15px;
     padding: 40px;
@@ -26,9 +26,6 @@
 }
 #myTabContent >div{
     padding-top: 30px;
-}
-.form-group label{
-    line-height: 50px;
 }
 .btn-block{
     margin-top: 30px;
@@ -74,33 +71,21 @@
     html{
         font-size: 16px;
     }
-    .form-group label{
-        line-height: 50px;
-    }
 }
 @media only screen and (max-width: 1300px) and (min-width: 1200px){
     html{
         font-size: 14px;
-    }
-    .form-group label{
-        line-height: 40px;
     }
 }
 @media only screen and (max-width: 1200px) and (min-width: 1000px){
     html{
         font-size: 12px;
     }
-    .form-group label{
-        line-height: 40px;
-    }
 }
 @media only screen and (max-width: 1000px)and (min-width: 800px){
     html{
         background-color: #2848af;
         font-size: 10px;
-    }
-    .form-group label{
-        line-height: 20px;
     }
     .container{
         background-color: #013b7b;
@@ -116,9 +101,6 @@
     html{
         background-color: #2848af;
         font-size: 10px;
-    }
-    .form-group label{
-        line-height: 20px;
     }
     .container{
         background-color: #013b7b;

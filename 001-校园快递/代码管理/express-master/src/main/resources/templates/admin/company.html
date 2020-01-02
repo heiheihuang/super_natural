@@ -19,6 +19,13 @@
         <!-- 左侧菜单 -->
         <div th:replace="admin/module/sidebar::html"></div>
         <div class="col-md-10">
+            <div class="panel-heading">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-info ml10" onclick="addCompanyButton()">新增公司</button>
+                    </div>
+                </form>
+            </div>
             <div class="panel-body">
                 <table id="tb_company"></table>
             </div>
@@ -107,10 +114,10 @@
     //操作栏的格式化
     function actionFormatter(value, row, index) {
         let id = "'" + value + "'";
-        return '<button class="btn btn-xs btn-danger" onclick="changeStatus(' + id + ')" title="删除">删除</button>';
+        return '<button class="btn btn-xs btn-danger" onclick="deleteCompany(' + id + ')" title="删除">删除</button>';
     }
 
-    function changeStatus(id) {
+    function deleteCompany(id) {
         //询问框
         layer.confirm('是否删除该公司？', {
             btn: ['确认','取消'] //按钮
@@ -118,7 +125,6 @@
             sendJson(HTTP.POST, "/api/v1/company/"+id+"/delete", {}, false, function (res) {
                 if(res.code === 0) {
                     layer.msg("操作成功",{icon:1});
-                    layer.close(index);
                     flushTable();
                 } else {
                     layer.msg(res.msg,{icon:2});
@@ -133,6 +139,37 @@
 
     function flushTable() {
         $("#tb_company").bootstrapTable('refresh',{url : '/api/v1/company/company-list'} );
+    }
+
+    function addCompanyButton() {
+        layer.open({
+            title: '增加快递公司',
+            area: ['300px', '240px'],
+            btnAlign: 'c',
+            closeBtn:'1',//右上角的关闭
+            content: '<div><label>公司名称</label><input name="txt_company_name" id="txt_company_name" /></div>' +
+                '<div><label>公司代码</label><input name="txt_company_code" id="txt_company_code" /></div>',
+            btn:['确认','取消'],
+            yes: function (index, layero) {
+                let txt_company_name = $('#txt_company_name').val();
+                let txt_company_code = $('#txt_company_code').val();
+                sendJson(HTTP.POST, "/api/v1/company/add", {name: txt_company_name, code: txt_company_code}, false, function (res) {
+                    if(res.code === 0) {
+                        layer.msg("操作成功",{icon:1});
+                        layer.close(index);
+                        flushTable();
+                    } else {
+                        layer.msg(res.msg,{icon:2});
+                    }
+                }, function () {
+                    layer.msg("未知错误",{icon:2});
+                });
+                layer.close(index);
+            },
+            no:function(index) {
+                layer.close(index);
+            }
+        });
     }
 </script>
 </body>

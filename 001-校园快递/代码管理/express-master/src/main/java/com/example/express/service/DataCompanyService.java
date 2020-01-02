@@ -13,6 +13,8 @@ public interface DataCompanyService extends IService<DataCompany> {
 
     List<DataCompany> listAllByCache();
 
+    List<DataCompany> listAllByNameOrCode(String name, String code);
+
     DataCompany getByCache(Integer id);
 
     BootstrapTableVO<DataCompany> pageDataCompanyVO(Page<DataCompany> dataCompanyPage);
