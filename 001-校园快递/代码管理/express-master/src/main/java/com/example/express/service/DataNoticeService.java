@@ -10,5 +10,7 @@ import java.util.List;
 
 public interface DataNoticeService extends IService<DataNotice> {
 
+    List<DataNotice> listAll();
+
     BootstrapTableVO<DataNotice> pageDataNoticeVO(Page<DataNotice> dataNoticePage);
 }

@@ -3,13 +3,12 @@ package com.example.express.controller.api;
 import com.example.express.common.util.StringUtils;
 import com.example.express.domain.ResponseResult;
 import com.example.express.domain.bean.DataCompany;
+import com.example.express.domain.bean.DataNotice;
 import com.example.express.domain.bean.DataSchool;
 import com.example.express.domain.enums.ResponseErrorCodeEnum;
 import com.example.express.domain.vo.DataAreaVO;
-import com.example.express.service.AipService;
-import com.example.express.service.DataAreaService;
-import com.example.express.service.DataCompanyService;
-import com.example.express.service.DataSchoolService;
+import com.example.express.domain.vo.OrderDescVO;
+import com.example.express.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +31,10 @@ public class PublicApiController {
     private DataSchoolService dataSchoolService;
     @Autowired
     private DataCompanyService dataCompanyService;
+    @Autowired
+    private OrderInfoService orderInfoService;
+    @Autowired
+    private DataNoticeService dataNoticeService;
     @Autowired
     private AipService aipService;
 
@@ -78,5 +81,30 @@ public class PublicApiController {
     public ResponseResult listCompany() {
         List<DataCompany> list = dataCompanyService.listAllByCache();
         return ResponseResult.success(list);
+    }
+
+    /**
+     * 读取公告数据
+     */
+    @GetMapping("/notice")
+    public ResponseResult listNotice() {
+        List<DataNotice> list = dataNoticeService.listAll();
+        return ResponseResult.success(list);
+    }
+    /**
+     * 获取订单信息
+     * - 管理员：任何订单
+     * - 派送员：已接的单
+     * - 用户：个人订单
+     * @author jitwxs
+     * @date 2019/4/25 23:36
+     */
+    @GetMapping("/order/info/{id}")
+    public ResponseResult getOrderDesc(@PathVariable String id) {
+        OrderDescVO descVO = orderInfoService.getDescVO(id);
+        if(descVO == null) {
+            return ResponseResult.failure(ResponseErrorCodeEnum.ORDER_NOT_EXIST);
+        }
+        return ResponseResult.success(descVO);
     }
 }
