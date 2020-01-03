@@ -77,7 +77,6 @@ public class PublicApiController {
     @GetMapping("/company")
     public ResponseResult listCompany() {
         List<DataCompany> list = dataCompanyService.listAllByCache();
-
         return ResponseResult.success(list);
     }
 }

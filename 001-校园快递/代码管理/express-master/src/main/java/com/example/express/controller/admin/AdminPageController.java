@@ -90,7 +90,7 @@ public class AdminPageController {
      * 公司管理页面
      */
     @RequestMapping("/company")
-    public String showCompany(@AuthenticationPrincipal SysUser sysUser, ModelMap map) {
+    public String showCompanyPage(@AuthenticationPrincipal SysUser sysUser, ModelMap map) {
         map.put("frontName", sysUserService.getFrontName(sysUser));
         return "admin/company";
     }
@@ -98,7 +98,7 @@ public class AdminPageController {
      * 用户管理页面
      */
     @RequestMapping("/user")
-    public String showUser(@AuthenticationPrincipal SysUser sysUser, ModelMap map) {
+    public String showUserPage(@AuthenticationPrincipal SysUser sysUser, ModelMap map) {
         map.put("frontName", sysUserService.getFrontName(sysUser));
         return "admin/user";
     }
@@ -107,7 +107,7 @@ public class AdminPageController {
      * 收益管理页面
      */
     @RequestMapping("/profit")
-    public String showProfit(@AuthenticationPrincipal SysUser sysUser, ModelMap map) {
+    public String showProfitPage(@AuthenticationPrincipal SysUser sysUser, ModelMap map) {
         map.put("frontName", sysUserService.getFrontName(sysUser));
         return "admin/profit";
     }
@@ -130,5 +130,14 @@ public class AdminPageController {
     public String showLogPage(@AuthenticationPrincipal SysUser sysUser,ModelMap map) {
         map.put("frontName", sysUserService.getFrontName(sysUser));
         return "admin/log";
+    }
+
+    /**
+     * 公告管理页面
+     */
+    @RequestMapping("/notice")
+    public String showNoticePage(@AuthenticationPrincipal SysUser sysUser,ModelMap map) {
+        map.put("frontName", sysUserService.getFrontName(sysUser));
+        return "admin/notice";
     }
 }
