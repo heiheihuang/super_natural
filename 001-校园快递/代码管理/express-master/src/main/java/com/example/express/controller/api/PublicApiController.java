@@ -5,15 +5,14 @@ import com.example.express.domain.ResponseResult;
 import com.example.express.domain.bean.DataCompany;
 import com.example.express.domain.bean.DataNotice;
 import com.example.express.domain.bean.DataSchool;
+import com.example.express.domain.dto.UserLoginDto;
 import com.example.express.domain.enums.ResponseErrorCodeEnum;
 import com.example.express.domain.vo.DataAreaVO;
 import com.example.express.domain.vo.OrderDescVO;
 import com.example.express.service.*;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -106,5 +105,13 @@ public class PublicApiController {
             return ResponseResult.failure(ResponseErrorCodeEnum.ORDER_NOT_EXIST);
         }
         return ResponseResult.success(descVO);
+    }
+
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    public ResponseResult phoneLogin(@RequestBody UserLoginDto userLoginDto){
+        if (userLoginDto.getUsername().isEmpty() || userLoginDto.getPassword().isEmpty()) {
+            return ResponseResult.failure(ResponseErrorCodeEnum.PARAMETER_ERROR);
+        }
+        return ResponseResult.success();
     }
 }

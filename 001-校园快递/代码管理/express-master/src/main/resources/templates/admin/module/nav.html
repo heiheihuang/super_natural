@@ -4,10 +4,12 @@
 <nav class="navbar navbar-default" th:fragment="html">
     <div class="container-fluid">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav"
+                    aria-expanded="false" aria-controls="navbar" style="width: 100%; margin: 0;">
             <a class="navbar-brand">大学校园快递代取管理系统</a>
+            </button>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <div>管理员：<span th:text="${frontName}"></span><span class="caret"></span></div>
