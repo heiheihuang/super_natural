@@ -1,0 +1,14 @@
+项目代码配置：
+1.本项目主体后台express-master框架为springboot、mybaits、boostrap、maven、springsecurity，暂时未移除三方服务技术代码，请忽略该配置，详细代码配置可参考express-master中readme.md文件，初始化脚本express.sql已提供，请采用mysql数据库，项目启动需自行配置application-dev.yaml，可从application-test.yaml内容复制过去后修改数据源为本地mysql；
+2.本项目主体Android端采用flutter框架开发，引入后需修改lib/HttpCommonUtil.dart文件中BaseUrl.url的IP路径为本地127.0.0.1或修改为natapp映射地址。
+
+项目环境配置：
+1.项目目录路径需全英文，否则Android项目无法正常启动。
+
+项目引用外部组件：
+1.后台需idea引用lombok插件，可在Setting-plugins查询配置；
+2.后台需启动redis，否则个人中心功能无法启用；
+3.flutter项目需安装AndroidStudio，且尽量安装最新版本3.5.3，安装后需在网上下载fluttersdk，选择dev版本，并将fluttersdk下bin文件夹引入path环境变量中，返回上一目录查找flutter_console.bat，双击运行后输入flutter_doctor，按照英文指示配置flutter环境；
+4.AndroidStudio需在Setting-plugins查询安装dart和flutter插件，安装后重启编辑器；
+5.AndroidStudio需在SDKmanager-SDK Tools中安装Google USB Driver，方便后续可用真机调试；
+6.下载natapp工具，可百度配置方法，映射本机环境端口至外网映射。
