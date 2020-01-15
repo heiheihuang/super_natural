@@ -140,4 +140,13 @@ public class AdminPageController {
         map.put("frontName", sysUserService.getFrontName(sysUser));
         return "admin/notice";
     }
+
+    /**
+     * 统计报表管理页面
+     */
+    @RequestMapping("/report")
+    public String showReportPage(@AuthenticationPrincipal SysUser sysUser, ModelMap map) {
+        map.put("frontName", sysUserService.getFrontName(sysUser));
+        return "admin/report";
+    }
 }
