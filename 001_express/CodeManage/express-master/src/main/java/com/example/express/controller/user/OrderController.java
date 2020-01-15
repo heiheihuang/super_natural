@@ -15,18 +15,27 @@ import com.example.express.exception.CustomException;
 import com.example.express.service.OrderInfoService;
 import com.example.express.service.OrderPaymentService;
 import com.example.express.service.SysUserService;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -248,5 +257,33 @@ public class OrderController {
             params.put(name, valueStr);
         }
         return params;
+    }
+
+    @GetMapping("/qrCode/{id}")
+    public void orderQrCode(@PathVariable String id, HttpServletResponse resp) {
+        ServletOutputStream stream = null;
+        resp.setContentType("image/png");
+        try {
+            stream = resp.getOutputStream();
+            Map<EncodeHintType, Object> hints = new HashMap<>();
+            //编码
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            //边框距
+            hints.put(EncodeHintType.MARGIN, 0);
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            BitMatrix bm = qrCodeWriter.encode(id, BarcodeFormat.QR_CODE, 200, 200, hints);
+            MatrixToImageWriter.writeToStream(bm, "png", stream);
+        } catch (WriterException | IOException e) {
+            e.getStackTrace();
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.flush();
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

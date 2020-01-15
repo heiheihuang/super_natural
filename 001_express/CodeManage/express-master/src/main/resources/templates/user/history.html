@@ -87,6 +87,11 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="col-sm-12">
+                                <img id="order_qr"></img>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="inputInfoName" class="col-sm-2 control-label">收件姓名</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static" id="inputInfoName"></p>
@@ -468,6 +473,7 @@
                     // 初始化模态框信息
                     let data = res.data;
                     $("#inputInfoId").text(data.orderId);
+                    $("#order_qr").attr("src", "/order/qrCode/"+data.orderId);
                     $("#inputInfoName").text(data.recName);
                     $("#inputInfoTel").text(data.recTel);
                     $("#inputInfoAddress").text(data.address);
